@@ -7,11 +7,15 @@ import org.zy.backup.model.Contact;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class PhoneListActivity extends Activity {
 
@@ -26,6 +30,16 @@ public class PhoneListActivity extends Activity {
 		ArrayAdapter<Contact> adapter = new PhoneListAdapt(this);
 		adapter.addAll(Backup.newInstance().contacts);
 		phoneList.setAdapter(adapter);
+		
+		phoneList.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+				Contact contact =  (Contact) parent.getItemAtPosition(position);
+				Toast.makeText(PhoneListActivity.this, contact.name, Toast.LENGTH_LONG).show();
+			}
+		});
 	}
 
 	
