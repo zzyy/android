@@ -6,6 +6,8 @@ import org.zy.backup.adapt.PhoneListAdapt;
 import org.zy.backup.model.Contact;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -38,6 +40,10 @@ public class PhoneListActivity extends Activity {
 				// TODO Auto-generated method stub
 				Contact contact =  (Contact) parent.getItemAtPosition(position);
 				Toast.makeText(PhoneListActivity.this, contact.name, Toast.LENGTH_LONG).show();
+				
+				Intent intent = new Intent(Intent.ACTION_CALL);
+				intent.setData(Uri.parse("tel:" + contact.number) );
+				startActivity(intent);
 			}
 		});
 	}
