@@ -1,5 +1,6 @@
 package org.zy.backup.activity;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +13,16 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.provider.Contacts;
+import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 
 public class MainActivity extends Activity {
@@ -45,6 +50,13 @@ public class MainActivity extends Activity {
 			contact.name = cursor.getString(nameIndex);
 			int phoneIndex = cursor.getColumnIndex(Phone.NUMBER);
 			contact.number = cursor.getString(phoneIndex);
+			int photoIndex = cursor.getColumnIndex(Phone.PHOTO_ID);
+			long phoneId = cursor.getLong(photoIndex);
+			if(phoneId>0){
+				Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, phoneId); 
+				InputStream in = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, photoUri);
+			}
+			
 			contacts.add(contact);
 		}
 		Backup.newInstance().contacts = contacts;
