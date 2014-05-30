@@ -41,7 +41,7 @@ public class PhoneListActivity extends Activity {
 				Contact contact =  (Contact) parent.getItemAtPosition(position);
 				Toast.makeText(PhoneListActivity.this, contact.name, Toast.LENGTH_LONG).show();
 				
-				Intent intent = new Intent(Intent.ACTION_CALL);
+				Intent intent = new Intent(Intent.ACTION_DIAL);
 				intent.setData(Uri.parse("tel:" + contact.number) );
 				startActivity(intent);
 			}
