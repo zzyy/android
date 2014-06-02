@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory 
+        android:title="first seeting">
+        <CheckBoxPreference 
+            android:title="checkBox"
+            android:key="checkbox"/>
+    </PreferenceCategory>
+    
+    <PreferenceCategory 
+        android:title="second seeting">
+        <CheckBoxPreference 
+            android:title="checkBox_second"
+            android:key="SecondCheckbox"/>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,11 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:my="org.zy.backup"
     tools:context="org.zy.backup.MainActivity" >
 
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
+        my:showAsAction="always"
+        android:icon="@drawable/contactphoto"
         android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/withText"
+        android:orderInCategory="100"
+        my:showAsAction="withText"
+         android:icon="@drawable/contactphoto"
+        android:title="withText"/>
+    <item
+        android:id="@+id/never"
+        android:orderInCategory="100"
+        my:showAsAction="never"
+         android:icon="@drawable/contactphoto"
+        android:title="never"/>
 
 </menu>
