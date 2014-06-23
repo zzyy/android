@@ -63,16 +63,21 @@ public class SliderRelativeLayout extends RelativeLayout {
 		switch(event.getAction()){
 			case MotionEvent.ACTION_DOWN:
 				mLastMoveX = (int) event.getX();
-				return handleAnctionDownEvent(event);
+				return handleActionDownEvent(event);
 			case MotionEvent.ACTION_MOVE:
 				mLastMoveX = x;
 				invalidate();
 				return true;
 			case MotionEvent.ACTION_UP:
-				
+				handleActionUpEvent(event);
+				return true;
 		}
 		
 		return super.onTouchEvent(event);
+	}
+
+	private void handleActionUpEvent(MotionEvent event) {
+		tv_slider_icon.setVisibility(View.VISIBLE);
 	}
 
 	@Override
@@ -89,7 +94,7 @@ public class SliderRelativeLayout extends RelativeLayout {
 		canvas.drawBitmap(dragBitmap, drawXpoint, drawXpoint, null);
 	}
 
-	private boolean handleAnctionDownEvent(MotionEvent event) {
+	private boolean handleActionDownEvent(MotionEvent event) {
 		Rect rect = new Rect();
 		tv_slider_icon.getHitRect(rect);
 		boolean isHit = rect.contains((int)event.getX(), (int)event.getY());
