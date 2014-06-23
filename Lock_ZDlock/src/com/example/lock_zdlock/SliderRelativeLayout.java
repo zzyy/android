@@ -1,21 +1,29 @@
 package com.example.lock_zdlock;
 
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
+import android.os.Handler;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class SliderRelativeLayout extends RelativeLayout {
 	private static String TAG = "SliderRelativeLayout";
 	
+	private Handler mainHandler = null;
+	public void setMainHandler(Handler mainHandler) {
+		this.mainHandler = mainHandler;
+	}
+
 	private Context mContext = null;
 	private Bitmap dragBitmap = null;
 	private TextView tv_slider_icon = null;
@@ -52,7 +60,7 @@ public class SliderRelativeLayout extends RelativeLayout {
 		tv_slider_icon =  (TextView) findViewById(R.id.getup_slider);
 	}
 	
-	private int mLastMoveX = 1000;
+	private int mLastMoveX = 10000;
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int x = (int) event.getX();
@@ -76,9 +84,45 @@ public class SliderRelativeLayout extends RelativeLayout {
 		return super.onTouchEvent(event);
 	}
 
+	private static int BACK_DURATION = 20;
+	private static float VE_HORIZONTAL = 0.7f;
 	private void handleActionUpEvent(MotionEvent event) {
-		tv_slider_icon.setVisibility(View.VISIBLE);
+		int x = (int) event.getX();
+		Log.e(TAG, "handleActionUpEvent x->" + x +", " +getRight());
+		
+		boolean isSuccess = Math.abs(x - getRight()) < 15;
+		if(isSuccess){
+			Toast.makeText(mContext, "解锁成功", Toast.LENGTH_SHORT).show();
+		}
+		
+		mLastMoveX = x;
+		int distance = x - tv_slider_icon.getRight();
+		if(distance>0){
+			mainHandler.postDelayed(BackDragImgTask, BACK_DURATION);
+		}else{
+			resetViewStatus();
+		}
 	}
+
+	private Runnable BackDragImgTask = new Runnable() {
+		
+		@Override
+		public void run() {
+			//一下次Bitmap应该到达的坐标值
+			mLastMoveX = mLastMoveX - (int)(BACK_DURATION * VE_HORIZONTAL);
+			
+			Log.e(TAG, "BackDragImgTask ############# mLastMoveX " + mLastMoveX);
+			
+			invalidate();//重绘		
+			//是否需要下一次动画 ？ 到达了初始位置，不在需要绘制
+			boolean shouldEnd = Math.abs(mLastMoveX - tv_slider_icon.getRight()) <= 8 ;			
+			if(!shouldEnd)
+			    mainHandler.postDelayed(BackDragImgTask, BACK_DURATION);
+			else { //复原初始场景
+				resetViewStatus();	
+			}
+		}
+	};
 
 	@Override
 	protected void onDraw(Canvas canvas) {
@@ -91,9 +135,15 @@ public class SliderRelativeLayout extends RelativeLayout {
 		int drawXpoint = mLastMoveX - dragBitmap.getWidth();
 		int drawYpoint = tv_slider_icon.getTop();
 		Log.i(TAG, "invalidateDrageImage x,y " + drawXpoint +","+ drawYpoint);
-		canvas.drawBitmap(dragBitmap, drawXpoint, drawXpoint, null);
+		canvas.drawBitmap(dragBitmap, drawXpoint<0? 5 : drawXpoint, drawYpoint, null);
 	}
 
+	private void resetViewStatus() {
+		tv_slider_icon.setVisibility(View.VISIBLE);
+		mLastMoveX = 10000;
+		invalidate();
+	}
+	
 	private boolean handleActionDownEvent(MotionEvent event) {
 		Rect rect = new Rect();
 		tv_slider_icon.getHitRect(rect);
