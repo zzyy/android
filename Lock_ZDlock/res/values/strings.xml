@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Lock_ZDlock</string>
+	<string name="hint_text">滑动解锁</string>
+    <string name="hint_unlock">向右滑动结束提醒</string>
+</resources>

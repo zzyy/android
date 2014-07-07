@@ -1,0 +1,6 @@
+/bin/classes
+*.class
+*.jar
+*/bin/
+*/gen/
+*/.settings/

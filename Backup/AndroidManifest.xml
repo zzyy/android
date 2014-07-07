@@ -31,6 +31,9 @@
             android:name=".activity.PhoneListActivity"
             android:configChanges="keyboardHidden"
             android:screenOrientation="portrait" />
+        <activity 
+            android:name=".activity.Setting"></activity>
+        
     </application>
 
 </manifest>

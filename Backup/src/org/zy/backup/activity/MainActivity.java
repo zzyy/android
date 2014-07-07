@@ -14,13 +14,28 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+<<<<<<< HEAD
 import android.database.Cursor;
+=======
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.BitmapFactory;
+>>>>>>> master
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+<<<<<<< HEAD
+=======
+import android.widget.Toast;
+import android.preference.PreferenceManager;
+>>>>>>> master
 import android.provider.Contacts;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
@@ -55,11 +70,20 @@ public class MainActivity extends Activity {
 			if(phoneId>0){
 				Uri photoUri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, phoneId); 
 				InputStream in = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, photoUri);
+<<<<<<< HEAD
+=======
+				contact.photo = BitmapFactory.decodeStream(in);
+			}else{
+				contact.photo = null;
+>>>>>>> master
 			}
 			
 			contacts.add(contact);
 		}
 		Backup.newInstance().contacts = contacts;
+		
+		SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+		Toast.makeText(this, String.valueOf(sharedPreferences.getBoolean("checkbox", false)), Toast.LENGTH_SHORT).show();
 		
 		Log.d("Phone", String.valueOf(count));
 		Bundle bundle = new Bundle();
@@ -90,21 +114,24 @@ public class MainActivity extends Activity {
 	}
 
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// TODO Auto-generated method stub
+		MenuInflater menuInflater = getMenuInflater();
+		menuInflater.inflate(R.menu.main, menu);
+		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+		case R.id.action_settings:
+			Intent intent = new Intent(this, Setting.class);
+			startActivity(intent);
+			break;
 
+		} 
+		return super.onOptionsItemSelected(item);
+	}
 }
