@@ -41,41 +41,45 @@ public class Apis extends ListActivity {
 		List<ResolveInfo> resolveInfos = pm.queryIntentActivities(intent, 0);
 		if (null == resolveInfos)
 			return result;
+		
+		Map<String, Boolean> entries = new HashMap<String, Boolean>();
 		for (ResolveInfo resolveInfo : resolveInfos) {
 			CharSequence lableSeq = resolveInfo.loadLabel(pm);
-			String lable = lableSeq.toString();
+			String lable = lableSeq != null ? lableSeq.toString()
+					: resolveInfo.activityInfo.name;
 
-			if ("".equals(prefix)) {
+			if ("".equals(prefix) || lable.startsWith(prefix)) {
 
-			}
+				String itemName = null;
+				Intent itemIntent = new Intent();
 
-			String itemName = null;
-			Intent itemIntent = new Intent();
-
-			Map<String, Boolean> entries = new HashMap<String, Boolean>();
-
-			String[] prePath = prefix.split("/");
-			String[] path = lable.split("/");
-			if (("".equals(prefix) ? 0 : prePath.length) == path.length - 1) {
-				itemName = path[path.length - 1];
-				itemIntent.setClassName(
-						resolveInfo.activityInfo.applicationInfo.packageName,
-						resolveInfo.activityInfo.name);
-			} else {
-				itemName = "".equals(prefix) ? path[0] : path[prePath.length];
-				if (entries.get(itemName) == null) {
-					itemIntent.putExtra("codePath", prefix + itemName + "/");
-					itemIntent.setClass(this, Apis.class);
-					entries.put(itemName, true);
+				String[] prePath = prefix.split("/");
+				String[] path = lable.split("/");
+				if (("".equals(prefix) ? 0 : prePath.length) == path.length - 1) {
+					itemName = path[path.length - 1];
+					itemIntent.setClassName(
+									resolveInfo.activityInfo.applicationInfo.packageName,
+									resolveInfo.activityInfo.name);
+					
+					Map<String, Object> item = new HashMap<String, Object>();
+					item.put("itemName", itemName);
+					item.put("intent", itemIntent);
+					result.add(item);
+				} else {
+					itemName = "".equals(prefix) ? path[0] : path[prePath.length];
+					if (entries.get(itemName) == null) {
+						itemIntent.putExtra("codePath", prefix + itemName + "/");
+						itemIntent.setClass(this, Apis.class);
+						entries.put(itemName, true);
+						
+						Map<String, Object> item = new HashMap<String, Object>();
+						item.put("itemName", itemName);
+						item.put("intent", itemIntent);
+						result.add(item);
+					}
 				}
 			}
-
-			Map<String, Object> item = new HashMap<String, Object>();
-			item.put("itemName", itemName);
-			item.put("intent", itemIntent);
-			result.add(item);
 		}
-
 		return result;
 	}
 
