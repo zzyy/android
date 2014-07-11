@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="19"
+        android:minSdkVersion="8"
         android:targetSdkVersion="19" />
 
     <application
@@ -21,6 +21,14 @@
             </intent-filter>
         </activity>
         <activity 
+            android:name=".app.TestBinderService"
+            android:label="app/binder/TestBinder">
+            <intent-filter >
+				<action android:name="com.zy.apis.main"/>                
+                <category android:name="com.zy.apis.default_category"/>
+            </intent-filter>
+        </activity>
+        <activity 
             android:name=".app.Items"
             android:label="app/item">
             <intent-filter >
@@ -28,7 +36,6 @@
                 <category android:name="com.zy.apis.default_category"/>
             </intent-filter>
         </activity>
-        
         <activity 
             android:name=".app.Lights"
             android:label="app/lights">
