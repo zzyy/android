@@ -5,43 +5,69 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="16"
         android:targetSdkVersion="19" />
-
+	 <uses-permission android:name="android.permission.CAMERA" />
+	 <uses-feature android:name="android.hardware.camera" />
+	 <uses-feature android:name="android.hardware.camera.autofocus" />
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name">
+        android:label="@string/app_name" >
         <activity
             android:name="com.zy.apis.Apis"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name=".app.TestBinderService"
-            android:label="app/binder/TestBinder">
-            <intent-filter >
-				<action android:name="com.zy.apis.main"/>                
-                <category android:name="com.zy.apis.default_category"/>
+            android:label="app/binder/TestBinder" >
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+
+                <category android:name="com.zy.apis.default_category" />
             </intent-filter>
         </activity>
-        <activity 
+        <activity
             android:name=".app.Items"
-            android:label="app/item">
-            <intent-filter >
-				<action android:name="com.zy.apis.main"/>                
-                <category android:name="com.zy.apis.default_category"/>
+            android:label="app/item" >
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+
+                <category android:name="com.zy.apis.default_category" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".app.Lights"
+            android:label="app/lights" >
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+
+                <category android:name="com.zy.apis.default_category" />
+            </intent-filter>
+        </activity>
+        
+        <!-- +++++++++++++++++++++++ Camera -->
+        <activity
+            android:name=".camera.CallCamera"
+            android:label="camera/CallCamera" >
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+                <category android:name="com.zy.apis.default_category" />
             </intent-filter>
         </activity>
         <activity 
-            android:name=".app.Lights"
-            android:label="app/lights">
-            <intent-filter >
-				<action android:name="com.zy.apis.main"/>                
-                <category android:name="com.zy.apis.default_category"/>
+            android:name=".camera.CameraImpl"
+            android:label="camera/Camera"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+                <category android:name="com.zy.apis.default_category" />
             </intent-filter>
         </activity>
     </application>

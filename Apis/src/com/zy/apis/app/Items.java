@@ -41,5 +41,6 @@ public class Items extends ListActivity {
 		Map<String, Object> data = (Map<String, Object>) l.getItemAtPosition(position);
 		Intent intent = (Intent) data.get("intent");
 		startActivity(intent);
+		overridePendingTransition(0, android.R.anim.fade_out);
 	}
 }

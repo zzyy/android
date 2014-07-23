@@ -25,7 +25,7 @@ public class ShewWave extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		setContentView(R.layout.show_wave);
+		setContentView(R.layout .show_wave);
 		
 		WindowManager vm =  (WindowManager) getSystemService(Context.WINDOW_SERVICE);
 		width = vm.getDefaultDisplay().getWidth();
