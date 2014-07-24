@@ -70,6 +70,14 @@
                 <category android:name="com.zy.apis.default_category" />
             </intent-filter>
         </activity>
+        <activity 
+            android:name=".animation.AnimatorTest"
+            android:label="animation/AnimatorTest">
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+                <category android:name="com.zy.apis.default_category" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
