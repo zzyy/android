@@ -6,6 +6,7 @@ import android.animation.Keyframe;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
@@ -58,22 +59,36 @@ public class AnimatorTest extends Activity{
 	private void setupAnimator() {
 		mLayoutTransition = new LayoutTransition();
 		//change_appearing
-		PropertyValuesHolder pvhLeft = PropertyValuesHolder.ofFloat("Left", 1f, 0f, 2f, 1f );
-		PropertyValuesHolder pvhTop = PropertyValuesHolder.ofFloat("Top", 1f, 0f, 2f, 1f );
-		PropertyValuesHolder pvhRight = PropertyValuesHolder.ofFloat("Right", 1f, 0f, 2f, 1f );
-		PropertyValuesHolder pvhBottom = PropertyValuesHolder.ofFloat("Bottom", 1f, 0f, 2f, 1f );
+		PropertyValuesHolder pvhLeft = PropertyValuesHolder.ofInt("Left",  1, 0 );
+		PropertyValuesHolder pvhTop = PropertyValuesHolder.ofInt("Top",   1, 0 );
+		PropertyValuesHolder pvhRight = PropertyValuesHolder.ofInt("Right",  1, 0);
+		PropertyValuesHolder pvhBottom = PropertyValuesHolder.ofInt("Bottom", 1, 0);
+		PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("Alpha", 1.0f, 0f, 1f);
 		
 		Keyframe kf0 = Keyframe.ofFloat(0f, 0f);
         Keyframe kf1 = Keyframe.ofFloat(.9999f, 360f);
         Keyframe kf2 = Keyframe.ofFloat(1f, 0f);
-        PropertyValuesHolder pvhRotation =
-                PropertyValuesHolder.ofKeyframe("rotation", kf0, kf1, kf2);
-        final ObjectAnimator changeOut = ObjectAnimator.ofPropertyValuesHolder(buttonContainer, pvhBottom,pvhLeft,pvhRight, pvhTop,pvhRotation);
-		changeOut.setDuration(1*1000);
+        PropertyValuesHolder pvhRotation = PropertyValuesHolder.ofKeyframe("rotation", kf0, kf1, kf2);
 //		ObjectAnimator objectAnimator = ObjectAnimator.ofPropertyValuesHolder(buttonContainer, pvhBottom,pvhLeft,pvhRight, pvhTop);
 //		objectAnimator.setDuration(1*1000);
 		
-		mLayoutTransition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING, changeOut);
+		PropertyValuesHolder pvhScaleX = PropertyValuesHolder.ofFloat("ScaleX", 0f, 2f, 0f ,1f);
+		PropertyValuesHolder pvhScaleY = PropertyValuesHolder.ofFloat("ScaleY", 0f, 2f, 0f ,1f);
+		PropertyValuesHolder pvhScaleXInv = PropertyValuesHolder.ofFloat("ScaleX", 0f, 2f, 0f );
+		PropertyValuesHolder pvhScaleYInv = PropertyValuesHolder.ofFloat("ScaleY", 0f, 2f, 0f );
+		ObjectAnimator apperaing =  ObjectAnimator.ofPropertyValuesHolder(buttonContainer, pvhScaleX, pvhScaleY, pvhRotation);
+		ObjectAnimator changeAppearing = ObjectAnimator.ofPropertyValuesHolder(buttonContainer, pvhLeft, pvhTop, pvhRotation, pvhScaleX, pvhScaleY);
+		ObjectAnimator disappearing = ObjectAnimator.ofPropertyValuesHolder(buttonContainer,pvhScaleXInv,pvhScaleYInv);
+		disappearing.setDuration(1000);
+		ObjectAnimator changeDisappearing = ObjectAnimator.ofPropertyValuesHolder(buttonContainer, pvhLeft, pvhTop, pvhRight,pvhBottom, pvhAlpha);
+		
+		mLayoutTransition.setStartDelay(LayoutTransition.CHANGE_DISAPPEARING, 1000);
+		
+		mLayoutTransition.setAnimator(LayoutTransition.APPEARING, apperaing);
+		mLayoutTransition.setAnimator(LayoutTransition.CHANGE_APPEARING, changeAppearing);
+		
+		mLayoutTransition.setAnimator(LayoutTransition.DISAPPEARING, disappearing);
+		mLayoutTransition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING, changeDisappearing);
 		
 		mLayoutTransition.setDuration(2*1000);
 	}
