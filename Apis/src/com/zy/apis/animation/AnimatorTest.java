@@ -5,11 +5,13 @@ import com.zy.apis.R;
 import android.R.string;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
+import android.animation.ArgbEvaluator;
 import android.animation.Keyframe;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
 import android.animation.TimeInterpolator;
+import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.os.Bundle;
@@ -31,10 +33,14 @@ public class AnimatorTest extends Activity{
 	ImageView i_image;
 	LinearLayout buttonContainer;
 	LayoutTransition mLayoutTransition;
+	LinearLayout container;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.animator_test);
+		container = (LinearLayout) findViewById(R.id.animatorContainer);
+		
+		setBackgroundAnimator();
 		
 		LinearLayout mLinearLayout = (LinearLayout) findViewById(R.id.animatorContainer);
 		final CheckBox mGoneCheckBox = (CheckBox) findViewById(R.id.gone);
@@ -73,6 +79,18 @@ public class AnimatorTest extends Activity{
 		setScaleAnimate();
 	}
 	
+	private void setBackgroundAnimator() {
+		int RED = 0xffFF8080;
+        int BLUE = 0xff8080FF;
+        int CYAN = 0xff80ffff;
+        int GREEN = 0xff80ff80;
+		ObjectAnimator bgAnimator = ObjectAnimator.ofInt(container, "background", RED, BLUE);
+		bgAnimator.setRepeatCount(ValueAnimator.INFINITE);
+		bgAnimator.setEvaluator(new ArgbEvaluator());
+		bgAnimator.setRepeatMode(ValueAnimator.REVERSE);
+		bgAnimator.start();
+	}
+
 	private void setScaleAnimate() {
 		PropertyValuesHolder pvhWidth = PropertyValuesHolder.ofFloat("scaleX", 2f);
 		PropertyValuesHolder pvhHeight = PropertyValuesHolder.ofFloat("scaleY", 2f);
