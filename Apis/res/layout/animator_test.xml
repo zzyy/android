@@ -61,4 +61,13 @@
         android:layout_gravity="center_horizontal"
         android:src="@drawable/koala" />
 
+    <Button 
+        android:id="@+id/changeFragment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="changeFragment"/>
+    <FrameLayout 
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="10px"></FrameLayout>
 </LinearLayout>

@@ -14,7 +14,11 @@ import android.animation.TimeInterpolator;
 import android.animation.TypeEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -24,6 +28,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 public class AnimatorTest extends Activity{
 	private static final String TAG ="AnimatorTest";
@@ -77,6 +82,10 @@ public class AnimatorTest extends Activity{
 		
 		b_scale = (Button) findViewById(R.id.scale);
 		setScaleAnimate();
+		
+		FragmentTransaction ft  = getFragmentManager().beginTransaction();
+		ft.replace(R.id.fragmentContainer, fragment);
+		ft.commit();
 	}
 	
 	private void setBackgroundAnimator() {
@@ -85,8 +94,9 @@ public class AnimatorTest extends Activity{
         int CYAN = 0xff80ffff;
         int GREEN = 0xff80ff80;
 		ObjectAnimator bgAnimator = ObjectAnimator.ofInt(container, "background", RED, BLUE);
-		bgAnimator.setRepeatCount(ValueAnimator.INFINITE);
+		bgAnimator.setDuration(3*1000);
 		bgAnimator.setEvaluator(new ArgbEvaluator());
+		bgAnimator.setRepeatCount(ValueAnimator.INFINITE);
 		bgAnimator.setRepeatMode(ValueAnimator.REVERSE);
 		bgAnimator.start();
 	}
@@ -94,12 +104,15 @@ public class AnimatorTest extends Activity{
 	private void setScaleAnimate() {
 		PropertyValuesHolder pvhWidth = PropertyValuesHolder.ofFloat("scaleX", 2f);
 		PropertyValuesHolder pvhHeight = PropertyValuesHolder.ofFloat("scaleY", 2f);
-		PropertyValuesHolder pvhPivotX = PropertyValuesHolder.ofFloat("pivotY", 0f);
-		final ObjectAnimator scaleAnimator = ObjectAnimator.ofPropertyValuesHolder(i_image, pvhPivotX, pvhHeight, pvhWidth);
+		PropertyValuesHolder pvhPivotY = PropertyValuesHolder.ofFloat("pivotY", 0f);
+		PropertyValuesHolder pvhPivotX = PropertyValuesHolder.ofFloat("pivotX", i_image.getWidth()/2);
+		final ObjectAnimator scaleAnimator = ObjectAnimator.ofPropertyValuesHolder(i_image, pvhPivotX, pvhPivotY, pvhHeight, pvhWidth);
 		
 		b_scale.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i(TAG, "X:" + i_image.getX() +", Y:" + i_image.getY() +", Left:"+ i_image.getLeft() +", Width:"+ i_image.getWidth());
+				Log.i(TAG, "pivox:" + i_image.getPivotX() +", pivoy:" + i_image.getPivotY());
 				scaleAnimator.start();
 			}
 		});
@@ -125,6 +138,8 @@ public class AnimatorTest extends Activity{
 		b_flip.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Log.i(TAG, "X:" + i_image.getX() +", Y:" + i_image.getY() +", Left:"+ i_image.getLeft() +", Width:"+ i_image.getWidth());
+				Log.i(TAG, "pivox:" + i_image.getPivotX() +", pivoy:" + i_image.getPivotY());
 				dissappearAnimator.start();
 			}
 		});
@@ -165,5 +180,22 @@ public class AnimatorTest extends Activity{
 		mLayoutTransition.setAnimator(LayoutTransition.CHANGE_DISAPPEARING, changeDisappearing);
 		
 		mLayoutTransition.setDuration(2*1000);
+	}
+}
+
+class CountFragment extends Fragment{
+	static int i;
+	
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		i++;
+	}
+	
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		return super.onCreateView(inflater, container, savedInstanceState);
 	}
 }
