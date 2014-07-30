@@ -16,12 +16,14 @@ import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
@@ -83,8 +85,21 @@ public class AnimatorTest extends Activity{
 		b_scale = (Button) findViewById(R.id.scale);
 		setScaleAnimate();
 		
+		((Button)findViewById(R.id.changeFragment)).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				FragmentTransaction ft  = getFragmentManager().beginTransaction();
+				//设置动画在前, 再ft.replace()
+//				ft.setCustomAnimations(R.animator.enter_fragment, null, null, null);
+				ft.setCustomAnimations(R.animator.fragment_slide_left_enter, R.animator.fragment_slide_left_out);
+				ft.replace(R.id.fragmentContainer, new CountFragment());
+				ft.addToBackStack(null);
+				ft.commit();
+			}
+		});
+		
 		FragmentTransaction ft  = getFragmentManager().beginTransaction();
-		ft.replace(R.id.fragmentContainer, fragment);
+		ft.replace(R.id.fragmentContainer, new CountFragment());
 		ft.commit();
 	}
 	
@@ -184,18 +199,24 @@ public class AnimatorTest extends Activity{
 }
 
 class CountFragment extends Fragment{
-	static int i;
-	
+	int i;
+	static int count;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		i++;
+		count++;
+		i = count;
 	}
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		return super.onCreateView(inflater, container, savedInstanceState);
+		TextView view = new TextView(container.getContext());
+		view.setText("Fragment #" + i);
+		view.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+		view.setBackgroundColor(i%2==0? Color.BLACK : Color.BLUE);
+		return view;
+//		container.addView(view);
+//		return container;
 	}
 }

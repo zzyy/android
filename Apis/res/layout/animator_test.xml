@@ -69,5 +69,7 @@
     <FrameLayout 
         android:id="@+id/fragmentContainer"
         android:layout_width="match_parent"
-        android:layout_height="10px"></FrameLayout>
+        android:layout_height="wrap_content"
+        android:minHeight="100px"
+        android:background="@drawable/bg"></FrameLayout>
 </LinearLayout>
