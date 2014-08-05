@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="16"
+        android:minSdkVersion="17"
         android:targetSdkVersion="19" />
 	 <uses-permission android:name="android.permission.CAMERA" />
 	 <uses-feature android:name="android.hardware.camera" />
@@ -101,6 +101,15 @@
                 android:resource="@xml/sample_widget_provider"/>
         </receiver>
         
+        <!-- ++++++++++++++++++UI+++++++++++++++ -->
+         <activity
+            android:name="com.zy.apis.UI.PullToRefresh"
+            android:label="UI/pull to refresh" >
+            <intent-filter>
+                <action android:name="com.zy.apis.main" />
+                <category android:name="com.zy.apis.default_category" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
