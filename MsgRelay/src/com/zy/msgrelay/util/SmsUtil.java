@@ -11,6 +11,8 @@ import android.telephony.SmsManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import java.util.List;
+
 public class SmsUtil {
 	private static String TAG = "zy";
 	
@@ -20,14 +22,14 @@ public class SmsUtil {
 			return;
 		}
 		SmsManager smsManager = SmsManager.getDefault();
-//		List<String> msgs = smsManager.divideMessage(msg);
+		List<String> msgs = smsManager.divideMessage(msg);
 		
 		Intent intent = new Intent(SEND_SMS_ACTION);
 		PendingIntent sentPI = PendingIntent.getBroadcast(mContext, 0, intent, 0);
 		
-//		for(String msgContent : msgs){
+		for(String msgContent : msgs){
 			smsManager.sendTextMessage(num, null, msg, sentPI, null);
-//		}	
+		}
 	}
 	
 	public static String SEND_SMS_ACTION = "com.zy.SEND_SMS_ACTION";

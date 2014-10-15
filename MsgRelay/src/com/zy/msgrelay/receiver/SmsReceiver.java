@@ -34,34 +34,40 @@ Log.d(TAG, ">>>>>>>>>>>> start onReceive");
 			Toast.makeText(context, "receive sms", Toast.LENGTH_SHORT).show();
 			
 			Object[] pdus = (Object[]) intent.getExtras().get("pdus");
-			
-			for(Object pdu : pdus){
-				SmsMessage msg = SmsMessage.createFromPdu((byte[]) pdu);
-				
-				String senderNum = msg.getDisplayOriginatingAddress();
-				String sender = SmsUtil.queryNameByNumber(senderNum, mContext);
-//				String sender = null;
-				sender = sender == null ? senderNum : sender;
-				String msgBody = msg.getDisplayMessageBody();
-				Date sendDate = new Date(msg.getTimestampMillis());
-				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
-				String sendTime = format.format(sendDate);
-				
-				StringBuilder sb = new StringBuilder();
-				sb.append(msgBody)
-					.append("\nTime: ")
-					.append(sendTime)
-					.append("\n Sender: ")
-					.append(sender);
-Log.d(TAG, "---msg: " +sb.toString());	
 
-				SharedPreferences sp = context.getSharedPreferences("Data", Context.MODE_PRIVATE);
-				String num = sp.getString("num", "");
-				num = TextUtils.isEmpty(num) ? "" : num;
-				SmsUtil.sendSms(num, sb.toString(), context);
-				Toast.makeText(context, sb.toString(), Toast.LENGTH_LONG).show();
-			}
-		}
+            StringBuilder sb = new StringBuilder();
+            String senderNum = null;
+            long timeStamp = 0;
+
+            for(Object pdu : pdus){
+                SmsMessage msg = SmsMessage.createFromPdu((byte[]) pdu);
+
+                senderNum = msg.getDisplayOriginatingAddress();
+                timeStamp = msg.getTimestampMillis();
+
+                String msgBody = msg.getDisplayMessageBody();
+
+                sb.append(msgBody);
+                Log.d(TAG, "---msg: " +sb.toString());
+
+            }
+
+            String sender = SmsUtil.queryNameByNumber(senderNum, mContext);
+            sender = sender == null ? senderNum : sender;
+            Date sendDate = new Date(timeStamp);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
+            String sendTime = format.format(sendDate);
+            sb.append("\nTime: ")
+                    .append(sendTime)
+                    .append("\n Sender: ")
+                    .append(sender);
+
+            SharedPreferences sp = context.getSharedPreferences("Data", Context.MODE_PRIVATE);
+            String num = sp.getString("num", "");
+            num = TextUtils.isEmpty(num) ? "" : num;
+            SmsUtil.sendSms(num, sb.toString(), context);
+            Toast.makeText(context, sb.toString() + "\n num:" + num, Toast.LENGTH_SHORT).show();
+        }
 	}
 	
 }
