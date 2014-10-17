@@ -42,8 +42,14 @@ public class MainActivity extends Activity {
 		e_num = (EditText) findViewById(R.id.num);
 		e_msg = (EditText) findViewById(R.id.msg);
 		b_sent = (Button) findViewById(R.id.sent);
-		
-		
+
+        e_num.setOnFocusChangeListener(new OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    saveNum();
+                }
+            }
+        });
 		
 		b_sent.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -78,9 +84,9 @@ public class MainActivity extends Activity {
 		e_num.setOnFocusChangeListener(new OnFocusChangeListener() {
 			
 			public void onFocusChange(View v, boolean hasFocus) {
-				if(!hasFocus){
-					saveNum();
-				}
+            if(!hasFocus){
+                saveNum();
+            }
 			}
 		});
 	}
@@ -96,6 +102,6 @@ public class MainActivity extends Activity {
 		num = e_num.getText().toString();
 		SharedPreferences.Editor editor = sp.edit();
 		editor.putString("num", num);
-		editor.commit();
+		editor.apply();
 	}
 }
