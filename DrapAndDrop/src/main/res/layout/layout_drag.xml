@@ -1,0 +1,33 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:dot="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${relativePackage}.${activityClass}">
+
+    <TextView
+        android:id="@+id/explanation"
+        android:text="@string/hello_world"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    
+    <com.zy.drapanddrop.DragableDot
+            android:id="@+id/dot1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/explanation"
+        android:padding="10dp"
+        dot:description="dot1"
+        dot:radius="60dp"/>
+
+    <com.zy.drapanddrop.DragableDot
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/explanation"
+            android:layout_toRightOf="@id/dot1"
+            android:layout_toEndOf="@id/dot1"
+            android:padding="10dp"
+            dot:description="dot2"
+            dot:radius="60dp"/>
+
+</RelativeLayout>

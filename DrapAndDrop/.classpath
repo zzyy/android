@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/Android SDK"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/r/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/aidl/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/buildConfig/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/rs/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/res/rs/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/r/test/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/aidl/test/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/buildConfig/test/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/source/rs/test/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/build/generated/res/rs/test/debug"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/res"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/resources"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/aidl"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/assets"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/java"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/jni"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/debug/rs"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/res"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/resources"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/aidl"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/assets"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/java"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/jni"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/main/rs"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/res"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/resources"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/aidl"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/assets"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/java"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/jni"/>
+	<classpathentry kind="src" path="/DrapAndDrop/src/androidTest/rs"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
